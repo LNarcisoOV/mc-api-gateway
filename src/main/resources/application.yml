@@ -1,0 +1,94 @@
+spring:
+  application:
+    name: mc-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: MC-CUSTOMER-ADDRESS
+          uri: lb://MC-CUSTOMER-ADDRESS
+          predicates: 
+            - Path=/customer/**
+          filters: 
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+            - name: CircuitBreaker
+              args: 
+                name: customerAddressService
+                fallbackUri: forward:/fallback/customer-address
+                
+        - id: MC-ZIP-CODE-VALIDATOR
+          uri: lb://MC-ZIP-CODE-VALIDATOR
+          predicates: 
+            - Path=/zip/**
+          filters: 
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+            - name: CircuitBreaker
+              args: 
+                name: zipCodeValidatorService
+                fallbackUri: forward:/fallback/zip-code-validator
+                
+        - id: MC-USER-SERVICE
+          uri: lb://MC-USER-SERVICE
+          predicates: 
+            - Path=/**
+          filters: 
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+            - name: CircuitBreaker
+              args: 
+                name: userService
+                fallbackUri: forward:/fallback/user-service
+
+server:
+  port: 8079
+ 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    preferIpAddress: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      customerAddressService:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        registerHealthIndicator: true
+        
+      zipCodeValidatorService:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        registerHealthIndicator: true
+        
+      userService:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        registerHealthIndicator: true
+  timelimiter:
+    instances:
+      customerAddressService:
+        timeoutDuration: 2s
