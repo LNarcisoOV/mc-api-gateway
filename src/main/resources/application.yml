@@ -1,8 +1,31 @@
 spring:
   application:
     name: mc-api-gateway
+  
+  security:
+    oauth2:
+      client:
+        keycloak:
+          client-id: mc-api-gateway
+          client-secret: polar-keycloak-secret
+          scopes: openid
+        provider:
+          issuer-uri: http://localhost:8079/auth/realms/polar-mc-api-gateway
+     
+  session:
+    store-type: redis
+  redis:
+    host: localhost
+    port: 6379  
+            
   cloud:
     gateway:
+      #default-filters:
+        #- TokenRelay
+        #- name: RequestRateLimiter
+          #args:
+            #redis-rate-limiter.replenishRate: 10
+            #redis-rate-limiter.burstCapacity: 20
       routes:
         - id: MC-CUSTOMER-ADDRESS
           uri: lb://MC-CUSTOMER-ADDRESS
