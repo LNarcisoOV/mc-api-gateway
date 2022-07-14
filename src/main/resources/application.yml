@@ -7,7 +7,7 @@ spring:
       client:
         keycloak:
           client-id: mc-api-gateway
-          client-secret: polar-keycloak-secret
+          client-secret: mc-api-gateway
           scopes: openid
         provider:
           issuer-uri: http://localhost:8079/auth/realms/polar-mc-api-gateway
