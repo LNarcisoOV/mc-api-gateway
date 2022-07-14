@@ -10,7 +10,7 @@ spring:
           client-secret: mc-api-gateway
           scopes: openid
         provider:
-          issuer-uri: http://localhost:8079/auth/realms/mc-api-gateway
+          issuer-uri: http://localhost:8083/auth/realms/mc-api-gateway
      
   session:
     store-type: redis
