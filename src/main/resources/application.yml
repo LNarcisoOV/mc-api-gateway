@@ -1,14 +1,20 @@
+server:
+  port: 8079
+
 spring:
   application:
     name: mc-api-gateway
-  
-  security:
-    oauth2:
-      client:
-        keycloak:
-          client-id: admin
-          client-secret: admin
-          scopes: openid
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+    
+  #security:
+    #oauth2:
+      #client:
+        #keycloak:
+          #client-id: admin
+          #client-secret: admin
+          #scopes: openid
         #provider:
           #issuer-uri: http://localhost:8083/realms/master
      
@@ -78,9 +84,6 @@ spring:
                 name: userService
                 fallbackUri: forward:/fallback/user-service
 
-server:
-  port: 8079
- 
 eureka:
   client:
     service-url:
@@ -115,3 +118,11 @@ resilience4j:
     instances:
       customerAddressService:
         timeoutDuration: 2s
+        
+keycloak:
+  realm: master
+  auth-server-url: http://localhost:8083/auth
+  resource: admin-cli
+  public-client: true
+  bearer-only: true
+    
