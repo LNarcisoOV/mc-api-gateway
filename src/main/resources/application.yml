@@ -6,11 +6,11 @@ spring:
     oauth2:
       client:
         keycloak:
-          client-id: mc-api-gateway
-          client-secret: mc-api-gateway
+          client-id: admin
+          client-secret: admin
           scopes: openid
         provider:
-          issuer-uri: http://localhost:8083/auth/realms/mc-api-gateway
+          issuer-uri: http://localhost:8083/realms/master
      
   session:
     store-type: redis
