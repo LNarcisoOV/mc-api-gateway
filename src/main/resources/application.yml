@@ -1,5 +1,9 @@
 server:
   port: 8079
+  
+logging:
+  level:
+    root: INFO
 
 spring:
   application:
