@@ -30,5 +30,11 @@ public class FallbackController {
         LOGGER.error("User service unavailable.");
         return Flux.empty();
     }
+    
+    @GetMapping("/kafka-customer-consumer")
+    Flux<Void> getKafkaCustomerConsumer() {
+        LOGGER.error("Kafka customer consumer service unavailable.");
+        return Flux.empty();
+    }
 
 }

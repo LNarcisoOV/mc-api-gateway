@@ -87,6 +87,22 @@ spring:
               args: 
                 name: userService
                 fallbackUri: forward:/fallback/user-service
+        - id: MC-KAFKA-CUSTOMER-CONSUMER
+          uri: lb://MC-KAFKA-CUSTOMER-CONSUMER
+          predicates: 
+            - Path=/**
+          filters: 
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+            - name: CircuitBreaker
+              args: 
+                name: kafkaCustomerConsumer
+                fallbackUri: forward:/fallback/kafka-customer-consumer
 
 eureka:
   client:
