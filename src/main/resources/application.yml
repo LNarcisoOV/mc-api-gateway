@@ -87,6 +87,7 @@ spring:
               args: 
                 name: userService
                 fallbackUri: forward:/fallback/user-service
+                
         - id: MC-KAFKA-CUSTOMER-CONSUMER
           uri: lb://MC-KAFKA-CUSTOMER-CONSUMER
           predicates: 
@@ -103,6 +104,7 @@ spring:
               args: 
                 name: kafkaCustomerConsumer
                 fallbackUri: forward:/fallback/kafka-customer-consumer
+                
         - id: MC-MONGO-PROVIDER
           uri: lb://MC-MONGO-PROVIDER
           predicates: 
