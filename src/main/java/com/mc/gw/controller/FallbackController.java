@@ -36,5 +36,11 @@ public class FallbackController {
         LOGGER.error("Kafka customer consumer service unavailable.");
         return Flux.empty();
     }
+    
+    @GetMapping("/mongo-provider")
+    Flux<Void> getMongoProvider() {
+        LOGGER.error("Mongo provider service unavailable.");
+        return Flux.empty();
+    }
 
 }

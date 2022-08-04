@@ -103,6 +103,22 @@ spring:
               args: 
                 name: kafkaCustomerConsumer
                 fallbackUri: forward:/fallback/kafka-customer-consumer
+        - id: MC-MONGO-PROVIDER
+          uri: lb://MC-MONGO-PROVIDER
+          predicates: 
+            - Path=/mongo/**
+          filters: 
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+            - name: CircuitBreaker
+              args: 
+                name: mongoProvider
+                fallbackUri: forward:/fallback/mongo-provider
 
 eureka:
   client:
