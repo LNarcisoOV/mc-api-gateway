@@ -108,7 +108,7 @@ spring:
         - id: MC-MONGO-PROVIDER
           uri: lb://MC-MONGO-PROVIDER
           predicates: 
-            - Path=/mongo/**
+            - Path=/**
           filters: 
             - name: Retry
               args:
