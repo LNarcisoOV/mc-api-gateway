@@ -121,6 +121,7 @@ spring:
               args: 
                 name: mongoProvider
                 fallbackUri: forward:/fallback/mongo-provider
+                
         - id: MC-CONFIG-SERVER
           uri: lb://MC-CONFIG-SERVER
           predicates: 
